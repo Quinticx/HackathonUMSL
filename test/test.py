@@ -69,9 +69,9 @@ MDScreen:
 
                     MapView:
                         id: mapview
-                        lat: 50.6394
-                        lon: 3.057
-                        zoom: 8
+                        lat: 38.7092
+                        lon: -90.3083
+                        zoom: 13
 
                 MDBoxLayout:
                     orientation: 'vertical'
