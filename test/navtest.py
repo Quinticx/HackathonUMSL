@@ -84,6 +84,7 @@ MDScreen:
                     size_hint: 1, 0.5
                     pos_hint: {'center_x': 0.5, 'center_y': 0.6}
 
+
                     MapView:
                         id: mapview
                         lat: 38.7092
@@ -109,16 +110,11 @@ MDScreen:
                 MDBoxLayout:
                     orientation: 'vertical'
                     size_hint: 1, 0.5
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
 
-                    Widget:
-                        Image:
-                            id: avatar
-                            size_hint: 1, 0.5
-                            source: 'amazon5.jpeg'
-
-
-
+                    Image:
+                        id: avatar
+                        size_hint: .1, 0.05
+                        source: 'amazon.png'
 
         MDNavigationDrawer:
             id: nav_drawer
