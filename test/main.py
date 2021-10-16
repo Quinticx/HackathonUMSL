@@ -9,127 +9,7 @@ from kivymd.theming import ThemableBehavior
 from kivy.clock import mainthread
 from kivy.utils import platform
 from plyer import gps
-
-
-KV = '''
-<ContentNavigationDrawer>:
-    orientation: 'vertical'
-    padding: '8dp'
-    spacing: '8dp'
-
-    AnchorLayout:
-        anchor_x: 'left'
-        size_hint_y: None
-        height: avatar.height
-
-    Image:
-        id: avatar
-        size_hint: None, None
-        size: '56dp', '56dp'
-        source: 'data/logo/kivy-icon-256.png'
-
-    MDLabel:
-        text: "Just Don't"
-        font_style: 'Button'
-        adaptive_height: True
-
-    MDLabel:
-        text: 'justdont@gmail.com'
-        font_style: 'Caption'
-        adaptive_height: True
-
-
-
-    ScrollView:
-
-        MDList:
-
-            OneLineListItem:
-                text: "Home"
-                on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "Home"
-
-            OneLineListItem:
-                text: "Add Pin"
-                on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "Add Pin"
-
-            OneLineListItem:
-                text: "Change Reward"
-                on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "Change Reward"
-
-
-
-MDScreen:
-
-    MDToolbar:
-        id: toolbar
-        pos_hint: {"top": 1}
-        elevation: 10
-        title: "MDNavigationDrawer"
-        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
-
-    MDNavigationLayout:
-        x: toolbar.height
-
-        ScreenManager:
-            id: screen_manager
-
-            MDScreen:
-                name: "Home"
-
-                MDBoxLayout:
-                    orientation: 'vertical'
-                    size_hint: 1, 0.5
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-
-                    MapView:
-                        id: mapview
-                        lat: -38.7092
-                        lon: -90.3083
-                        zoom: 13
-
-            MDScreen:
-                name: "Add Pin"
-
-                MDBoxLayout:
-                    orientation: 'vertical'
-                    size_hint: 1, 0.5
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-
-                    MapView:
-                        id: mapviewpin
-                        lat: 38.7092
-                        lon: -90.3083
-                        zoom: 11
-            MDScreen:
-                name: "Change Reward"
-
-                MDBoxLayout:
-                    orientation: 'vertical'
-                    size_hint: 1, 0.5
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-
-                    Widget:
-                        Image:
-                            id: avatar
-                            size_hint: 1, 0.5
-                            source: 'amazon5.jpeg'
-
-
-
-
-        MDNavigationDrawer:
-            id: nav_drawer
-
-            ContentNavigationDrawer:
-                screen_manager: screen_manager
-                nav_drawer: nav_drawer
-'''
+from kivy.clock import Clock
 
 
 class ContentNavigationDrawer(MDBoxLayout):
@@ -157,7 +37,7 @@ class TestNavigationDrawer(MDApp):
             print("Android! Requesting Permissions")
             self.request_android_permissions()
 
-        return Builder.load_string(KV)
+        return Builder.load_file("layout.kv")
 
     def on_start(self):
         if platform == "android":
@@ -166,6 +46,11 @@ class TestNavigationDrawer(MDApp):
                 MapMarker(lat=38.718775, lon=-90.329539)
             )
 
+            Clock.schedule_interval(self.streak_callback, 30)
+
+    def streak_callback(self, dt):
+        print("YES THE CALLBACK IS RUNNING")
+        print(dt)
 
     @mainthread
     def location_update(self, **kwargs):
