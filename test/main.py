@@ -7,6 +7,8 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import OneLineIconListItem, MDList
 from kivy.clock import mainthread
 from kivy.utils import platform
+import urllib3
+from kivy_garden.mapview import MapSource,MapView
 
 KV = '''
 # Menu item in the DrawerList list.
@@ -42,16 +44,29 @@ KV = '''
     ScrollView:
         DrawerList:
             id: md_list
+
 MDScreen:
     MDNavigationLayout:
         ScreenManager:
             MDScreen:
                 MDBoxLayout:
                     orientation: 'vertical'
+                    size_hint: 1, .5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+                    MapView:
+                        id: mapview
+                        lat: 38.7092
+                        lon: -90.3083
+                        zoom: 13
+                MDBoxLayout:
+                    orientation: 'vertical'
                     MDToolbar:
                         title: "Navigation Drawer"
                         elevation: 10
                         left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    Widget:
+                MDBoxLayout:
+                    orientation: 'horizontal'
                     Widget:
         MDNavigationDrawer:
             id: nav_drawer
@@ -89,6 +104,9 @@ class TestNavigationDrawer(MDApp):
         request_permissions([Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION])
 
     def build(self):
+        self.lat = 0 #default lat
+        self.lon = 0 #default lon
+
         try:
             gps.configure(on_location=self.location_update,
             on_status=self.status_update)
@@ -120,11 +138,11 @@ class TestNavigationDrawer(MDApp):
 
     @mainthread
     def location_update(self, **kwargs):
-        print("YO DEBUG MESSAGE")
+        print("GPS INFORMATION")
         print('\n'.join([
             '{}={}'.format(k, v) for k, v in kwargs.items()]))
         self.lat = kwargs['lat']
-        sefl.lon = kwargs['lon']
+        self.lon = kwargs['lon']
 
     @mainthread
     def status_update(self, stype, status):
