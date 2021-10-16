@@ -8,6 +8,7 @@ from kivy_garden.mapview import MapSource, MapView, MapMarker
 from kivymd.theming import ThemableBehavior
 from kivy.clock import mainthread
 from kivy.utils import platform
+from plyer import gps
 
 
 KV = '''
