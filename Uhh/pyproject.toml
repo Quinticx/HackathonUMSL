@@ -1,0 +1,49 @@
+[tool.briefcase]
+project_name = "Uhh"
+bundle = "com.siue.uhh"
+version = "0.0.1"
+url = "https://uhh.siue.com/Uhh"
+license = "GNU General Public License v2 (GPLv2)"
+author = 'Team Uhh'
+author_email = "uhh@siue.edu"
+
+[tool.briefcase.app.Uhh]
+formal_name = "Uhh"
+description = "Get quitting help!"
+icon = "src/Uhh/resources/Uhh"
+sources = ['src/Uhh']
+requires = []
+
+
+[tool.briefcase.app.Uhh.macOS]
+requires = [
+    'toga-cocoa>=0.3.0.dev20',
+]
+
+[tool.briefcase.app.Uhh.linux]
+requires = [
+    'toga-gtk>=0.3.0.dev20',
+]
+system_requires = [
+    'libgirepository1.0-dev',
+    'libcairo2-dev',
+    'libpango1.0-dev',
+    'libwebkitgtk-3.0-0',
+    'gir1.2-webkit-3.0',
+]
+
+[tool.briefcase.app.Uhh.windows]
+requires = [
+    'toga-winforms>=0.3.0.dev20',
+]
+
+# Mobile deployments
+[tool.briefcase.app.Uhh.iOS]
+requires = [
+    'toga-iOS>=0.3.0.dev20',
+]
+
+[tool.briefcase.app.Uhh.android]
+requires = [
+    'toga-android>=0.3.0.dev20',
+]
