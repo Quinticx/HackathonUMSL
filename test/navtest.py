@@ -81,14 +81,58 @@ MDScreen:
 
                 MDBoxLayout:
                     orientation: 'vertical'
-                    size_hint: 1, 0.5
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                    size_hint: 1, 1
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.4}
 
                     MapView:
+                        size_hint: 1, 0.6
                         id: mapview
                         lat: 38.7092
                         lon: -90.3083
                         zoom: 13
+
+
+                    MDGridLayout:
+                        cols: 5
+                        row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols
+                        row_force_default: True
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5 }
+                        size_hint_x: 0.7
+
+                        #adaptive_height: True
+                        padding: dp(10), dp(200)
+                        #spacing: dp(4)
+
+                        SmartTileWithLabel:
+                            id: 'day1'
+                            source: "empty.jpg"
+                            text: "[size=16]Day 1[/size]"
+                            halign: 'middle'
+
+                        SmartTileWithLabel:
+                            id: 'day2'
+                            source: "empty.jpg"
+                            text: "[size=16]Day 2[/size]"
+
+                        SmartTileWithLabel:
+                            id: 'day3'
+                            source: "empty.jpg"
+                            text: "[size=16]Day 3[/size]"
+
+                        SmartTileWithLabel:
+                            id: 'day4'
+                            source: "empty.jpg"
+                            text: "[size=16]Day 4[/size]"
+
+                        SmartTileWithLabel:
+                            id: 'day5'
+                            source: "empty.jpg"
+                            text: "[size=16]Day 5[/size]"
+
+
+
+
+
 
             MDScreen:
                 name: "Add Pin"
@@ -103,6 +147,8 @@ MDScreen:
                         lat: 38.7092
                         lon: -90.3083
                         zoom: 11
+
+
             MDScreen:
                 name: "Change Reward"
 
@@ -111,11 +157,11 @@ MDScreen:
                     size_hint: 1, 0.5
                     pos_hint: {'center_x': 0.5, 'center_y': 0.6}
 
-                    Widget:
-                        Image:
-                            id: avatar
-                            size_hint: 1, 0.5
-                            source: 'amazon5.jpeg'
+                    Image:
+                        id: avatar
+                        size_hint: 1, 0.5
+                        size: '56dp', '56dp'
+                        source: 'data/logo/kivy-icon-256.png'
 
 
 
