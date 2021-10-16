@@ -1,10 +1,11 @@
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ListProperty
-
+from kivy_garden.mapview import MapSource, MapView
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import OneLineIconListItem, MDList
+from kivy_garden.mapview import MapSource, MapView
 
 KV = '''
 # Menu item in the DrawerList list.
@@ -58,7 +59,18 @@ MDScreen:
 
         ScreenManager:
 
+
             MDScreen:
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint: 1, .5
+
+
+                    MapView:
+                        id: mapview
+                        lat: 50.6394
+                        lon: 3.057
+                        zoom: 8
 
                 MDBoxLayout:
                     orientation: 'vertical'
@@ -69,6 +81,12 @@ MDScreen:
                         left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
 
                     Widget:
+
+                MDBoxLayout:
+                    orientation: 'horizontal'
+
+                    Widget:
+
 
 
         MDNavigationDrawer:
