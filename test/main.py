@@ -7,7 +7,7 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import OneLineIconListItem, MDList
 from kivy.clock import mainthread
 from kivy.utils import platform
-import urllib3
+
 from kivy_garden.mapview import MapSource,MapView
 
 KV = '''
@@ -31,7 +31,7 @@ KV = '''
         Image:
             id: avatar
             size_hint: None, None
-            size: "56dp", "56dp"
+            size: "5package6dp", "56dp"
             source: "data/logo/kivy-icon-256.png"
     MDLabel:
         text: "KivyMD library"
