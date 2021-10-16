@@ -1,10 +1,12 @@
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ListProperty
-
+from kivy_garden.mapview import MapSource, MapView
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import OneLineIconListItem, MDList
+from kivy_garden.mapview import MapSource, MapView
+from kivy.properties import ObjectProperty
 
 KV = '''
 # Menu item in the DrawerList list.
@@ -36,19 +38,32 @@ KV = '''
             source: "data/logo/kivy-icon-256.png"
 
     MDLabel:
-        text: "KivyMD library"
+        text: "Just Don't"
         font_style: "Button"
         adaptive_height: True
 
     MDLabel:
-        text: "kivydevelopment@gmail.com"
+        text: "justdont@gmail.com"
         font_style: "Caption"
         adaptive_height: True
 
     ScrollView:
 
-        DrawerList:
-            id: md_list
+        MDList:
+
+            OneLineListItem:
+                text: 'Add Pin'
+                on_press:
+                    root.nav_drawer.set_state('close')
+                    root.screen_manager.current = 'pin'
+
+            OneLineListItem:
+                text: 'Change Reward'
+                on_press:
+                    root.nav_drawer.set_state('close')
+                    root.screen_manager.current = 'reward'
+        #DrawerList:
+            #id: md_list
 
 
 
@@ -59,6 +74,51 @@ MDScreen:
         ScreenManager:
 
             MDScreen:
+                name: 'pin'
+                MDLabel:
+                    text: 'Add Pin'
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint:1, 0.5
+                    pos_hint: {'center_x': 0.5, 'center_y': 1}
+
+                    MapView:
+                        id: pins
+                        lat: 38.7092
+                        lon: -90.3083
+                        zoom: 11
+            MDScreen:
+                name: 'reward'
+                MDLabel:
+                    text: 'Change Reward'
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint:1, 0.5
+                    pos_hint: {'center_x': 0.5, 'center_y': 1}
+
+                    MapView:
+                        id: pins
+                        lat: 38.7092
+                        lon: -90.3083
+                        zoom: 11
+
+
+
+
+            MDScreen:
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint: 1, .5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+
+
+                    MapView:
+                        id: mapview
+                        lat: 38.7092
+                        lon: -90.3083
+                        zoom: 13
 
                 MDBoxLayout:
                     orientation: 'vertical'
@@ -70,18 +130,26 @@ MDScreen:
 
                     Widget:
 
+                MDBoxLayout:
+                    orientation: 'horizontal'
+
+                    Widget:
+
+
 
         MDNavigationDrawer:
             id: nav_drawer
 
             ContentNavigationDrawer:
-                id: content_drawer
+                #id: content_drawer
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
 '''
 
 
 class ContentNavigationDrawer(MDBoxLayout):
-    pass
-
+    screen_manager = ObjectProperty()
+    nav_drawer = ObjectProperty()
 
 class ItemDrawer(OneLineIconListItem):
     icon = StringProperty()
@@ -106,12 +174,9 @@ class TestNavigationDrawer(MDApp):
 
     def on_start(self):
         icons_item = {
-            "folder": "My files",
-            "account-multiple": "Shared with me",
-            "star": "Starred",
-            "history": "Recent",
-            "checkbox-marked": "Shared with me",
-            "upload": "Upload",
+            "crosshairs-gps": "Add Pin",
+            "account-cash": "Change Reward",
+            "account-circle": "Change Profile Picture",
         }
         for icon_name in icons_item.keys():
             self.root.ids.content_drawer.ids.md_list.add_widget(
