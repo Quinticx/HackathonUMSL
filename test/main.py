@@ -1,72 +1,100 @@
+
+from kivy.lang import Builder
+from plyer import gps
 from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.textinput import TextInput
+from kivy.properties import StringProperty
+from kivy.clock import mainthread
+from kivy.utils import platform
 
-class MainApp(App):
-    def build(self):
-        self.operators = ["/", "*", "+", "-"]
-        self.last_was_operator = None
-        self.last_button = None
-        main_layout = BoxLayout(orientation="vertical")
-        self.solution = TextInput(
-            multiline=False, readonly=True, halign="right", font_size=55
-        )
-        main_layout.add_widget(self.solution)
-        buttons = [
-            ["7", "8", "9", "/"],
-            ["4", "5", "6", "*"],
-            ["1", "2", "3", "-"],
-            [".", "0", "C", "+"],
-        ]
-        for row in buttons:
-            h_layout = BoxLayout()
-            for label in row:
-                button = Button(
-                    text=label,
-                    pos_hint={"center_x": 0.5, "center_y": 0.5},
-                )
-                button.bind(on_press=self.on_button_press)
-                h_layout.add_widget(button)
-            main_layout.add_widget(h_layout)
+kv = '''
+BoxLayout:
+    orientation: 'vertical'
+    Label:
+        text: app.gps_location
+    Label:
+        text: app.gps_status
+    BoxLayout:
+        size_hint_y: None
+        height: '48dp'
+        padding: '4dp'
+        ToggleButton:
+            text: 'Start' if self.state == 'normal' else 'Stop'
+            on_state:
+                app.start(1000, 0) if self.state == 'down' else \
+                app.stop()
+'''
 
-        equals_button = Button(
-            text="=", pos_hint={"center_x": 0.5, "center_y": 0.5}
-        )
-        equals_button.bind(on_press=self.on_solution)
-        main_layout.add_widget(equals_button)
 
-        return main_layout
+class GpsTest(App):
 
-    def on_button_press(self, instance):
-        current = self.solution.text
-        button_text = instance.text
+    gps_location = StringProperty()
+    gps_status = StringProperty('Click Start to get GPS location updates')
 
-        if button_text == "C":
-            # Clear the solution widget
-            self.solution.text = ""
-        else:
-            if current and (
-                self.last_was_operator and button_text in self.operators):
-                # Don't add two operators right after each other
-                return
-            elif current == "" and button_text in self.operators:
-                # First character cannot be an operator
-                return
+    def request_android_permissions(self):
+        """
+        Since API 23, Android requires permission to be requested at runtime.
+        This function requests permission and handles the response via a
+        callback.
+        The request will produce a popup if permissions have not already been
+        been granted, otherwise it will do nothing.
+        """
+        from android.permissions import request_permissions, Permission
+
+        def callback(permissions, results):
+            """
+            Defines the callback to be fired when runtime permission
+            has been granted or denied. This is not strictly required,
+            but added for the sake of completeness.
+            """
+            if all([res for res in results]):
+                print("callback. All permissions granted.")
             else:
-                new_text = current + button_text
-                self.solution.text = new_text
-        self.last_button = button_text
-        self.last_was_operator = self.last_button in self.operators
+                print("callback. Some permissions refused.")
 
-    def on_solution(self, instance):
-        text = self.solution.text
-        if text:
-            solution = str(eval(self.solution.text))
-            self.solution.text = solution
+        request_permissions([Permission.ACCESS_COARSE_LOCATION,
+                             Permission.ACCESS_FINE_LOCATION], callback)
+        # # To request permissions without a callback, do:
+        # request_permissions([Permission.ACCESS_COARSE_LOCATION,
+        #                      Permission.ACCESS_FINE_LOCATION])
+
+    def build(self):
+        try:
+            gps.configure(on_location=self.on_location,
+                          on_status=self.on_status)
+        except NotImplementedError:
+            import traceback
+            traceback.print_exc()
+            self.gps_status = 'GPS is not implemented for your platform'
+
+        if platform == "android":
+            print("gps.py: Android detected. Requesting permissions")
+            self.request_android_permissions()
+
+        return Builder.load_string(kv)
+
+    def start(self, minTime, minDistance):
+        gps.start(minTime, minDistance)
+
+    def stop(self):
+        gps.stop()
+
+    @mainthread
+    def on_location(self, **kwargs):
+        self.gps_location = '\n'.join([
+            '{}={}'.format(k, v) for k, v in kwargs.items()])
+
+    @mainthread
+    def on_status(self, stype, status):
+        self.gps_status = 'type={}\n{}'.format(stype, status)
+
+    def on_pause(self):
+        gps.stop()
+        return True
+
+    def on_resume(self):
+        gps.start(1000, 0)
+        pass
 
 
-if __name__ == "__main__":
-    app = MainApp()
-    app.run()
-
+if __name__ == '__main__':
+    GpsTest().run()
