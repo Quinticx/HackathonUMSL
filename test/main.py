@@ -88,7 +88,7 @@ MDScreen:
 
                     MapView:
                         id: mapview
-                        lat: 38.7092
+                        lat: -38.7092
                         lon: -90.3083
                         zoom: 13
 
