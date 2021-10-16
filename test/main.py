@@ -41,6 +41,7 @@ class TestNavigationDrawer(MDApp):
 
     def on_start(self):
         if platform == "android":
+            self.streak = 0
             gps.start(1000, 0)
             self.root.ids.mapview.add_marker(
                 MapMarker(lat=38.718775, lon=-90.329539)
@@ -49,8 +50,9 @@ class TestNavigationDrawer(MDApp):
             Clock.schedule_interval(self.streak_callback, 30)
 
     def streak_callback(self, dt):
-        print("YES THE CALLBACK IS RUNNING")
-        print(dt)
+        self.streak += 1
+        if (self.streak < 6):
+            self.root.ids["day" + str(self.streak)].source = "star.png"
 
     @mainthread
     def location_update(self, **kwargs):
