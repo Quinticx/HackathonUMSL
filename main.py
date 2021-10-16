@@ -58,7 +58,7 @@ class MainApp(App):
                 self.solution.text = new_text
         self.last_button = button_text
         self.last_was_operator = self.last_button in self.operators
-
+ 
     def on_solution(self, instance):
         text = self.solution.text
         if text:
