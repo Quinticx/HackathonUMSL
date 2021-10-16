@@ -4,7 +4,7 @@ from kivy_garden.mapview import MapSource, MapView
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import OneLineListItem, MDList
-from kivy_garden.mapview import MapSource, MapView
+from kivy_garden.mapview import MapSource, MapView, MapMarker
 from kivymd.theming import ThemableBehavior
 from kivy.clock import mainthread
 from kivy.utils import platform
@@ -161,6 +161,9 @@ class TestNavigationDrawer(MDApp):
     def on_start(self):
         if platform == "android":
             gps.start(1000, 0)
+            self.root.ids.mapview.add_marker(
+                MapMarker(lat=38.718775, lon=-90.329539)
+            )
 
 
     @mainthread
@@ -170,7 +173,8 @@ class TestNavigationDrawer(MDApp):
             '{}={}'.format(k, v) for k, v in kwargs.items()]))
         self.lat = kwargs['lat']
         self.lon = kwargs['lon']
-        self.root.mapview.center_on(self.lat, self.lon)
+        self.root.ids.mapview.center_on(self.lat, self.lon)
+        
 
     @mainthread
     def status_update(self, stype, status):
