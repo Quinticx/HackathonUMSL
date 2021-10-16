@@ -101,7 +101,7 @@ MDScreen:
                     pos_hint: {'center_x': 0.5, 'center_y': 0.6}
 
                     MapView:
-                        id: mapview
+                        id: mapviewpin
                         lat: 38.7092
                         lon: -90.3083
                         zoom: 11
@@ -170,7 +170,7 @@ class TestNavigationDrawer(MDApp):
             '{}={}'.format(k, v) for k, v in kwargs.items()]))
         self.lat = kwargs['lat']
         self.lon = kwargs['lon']
-        self.root.map_view.center_on(self.lat, self.lon)
+        self.root.mapview.center_on(self.lat, self.lon)
 
     @mainthread
     def status_update(self, stype, status):
