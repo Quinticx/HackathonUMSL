@@ -64,6 +64,7 @@ MDScreen:
                 MDBoxLayout:
                     orientation: 'vertical'
                     size_hint: 1, .5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.8}
 
 
                     MapView:
