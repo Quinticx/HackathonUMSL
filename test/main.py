@@ -24,7 +24,7 @@ class PinButton(Button):
         self.text = "Add Pin"
 
     def addpin(self):
-        mapview = App.get_running_app().root.ids.mapview
+        mapview =MDApp.get_running_app().root.ids.mapview
         m1 = MapMarker(lat = mapview.lat, lon = mapview.lon, source = "marker.png")
         mapview.add_marker(m1)
 
