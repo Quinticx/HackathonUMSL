@@ -107,7 +107,9 @@ class TestNavigationDrawer(MDApp):
 
         self.personLocator.lat = self.lat
         self.personLocator.lon = self.lon
-        self.insideMarkerRadius = isInRadius
+        self.personLocatorPin.lat = self.lat
+        self.personLocatorPin.lon = self.lon
+        self.insideMarkerRadius = isInRadius 
 
     def streak_reset(self, dt):
         if (self.insideMarkerRadius):
