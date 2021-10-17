@@ -34,6 +34,8 @@ class PinButton(Button):
 
 
 class TestNavigationDrawer(MDApp):
+    insideMarkerRadius = False
+
     def request_android_permissions(self):
         from android.permissions import request_permissions, Permission
 
@@ -71,8 +73,6 @@ class TestNavigationDrawer(MDApp):
 
     @mainthread
     def location_update(self, **kwargs):
-        insideMarkerRadius = False
-
         print("GPS INFORMATION")
         print('\n'.join([
             '{}={}'.format(k, v) for k, v in kwargs.items()]))
@@ -87,12 +87,13 @@ class TestNavigationDrawer(MDApp):
             if distanceFromPin < .0003 and insideMarkerRadius != True:
                 insideMarkerRadius = True
                 print("Near a pinned location\n")
-                Clock.schedule_interval(self.streak_reset, 5) # 5 seconds as a testing value
+                Clock.schedule_once(self.streak_reset, 5) # 5 seconds as a testing value
 
     def streak_reset(self, dt):
+        insideMarkerRadius = False
         self.streak = 0;
-        for x in range(6):
-            self.root.ids["day" + str(x)].source = "empty.jpg"
+        for x in range(5):
+            self.root.ids["day" + str(x + 1)].source = "empty.jpg"
 
     @mainthread
     def status_update(self, stype, status):
