@@ -27,8 +27,16 @@ Insert gif or link to demo
 
   
 ## Screenshots
+App view of the home screen, which shows the users current location and current sobriety streak.
+![App Screenshot](homedemo.png)
 
-![App Screenshot]()
+App view of the navigation screen, which allows the user to go to the homescreen, add a pin screen, or choose rewards screen.
+![App Screenshot](navbardemo.png)
+
+App view of adding pins for user defined locations to avoid.
+![App Screenshot](addpindemo.png)
+
+
 
   
   
