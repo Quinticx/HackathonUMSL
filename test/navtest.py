@@ -4,7 +4,7 @@ from kivy_garden.mapview import MapSource, MapView
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import OneLineListItem, MDList
-from kivy_garden.mapview import MapSource, MapView
+from kivy_garden.mapview import MapSource, MapView, MapMarker
 from kivymd.theming import ThemableBehavior
 from kivy.uix.button import Button
 
@@ -21,7 +21,7 @@ class PinButton(Button):
         self.text = "Add Pin"
 
     def addpin(self):
-        mapview = App.get_running_app().root.ids.mapview
+        mapview = MDApp.get_running_app().root.ids.mapview
         m1 = MapMarker(lat = mapview.lat, lon = mapview.lon, source = "marker.png")
         mapview.add_marker(m1)
 
