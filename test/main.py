@@ -4,7 +4,7 @@ from kivy_garden.mapview import MapSource, MapView
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import OneLineListItem, MDList
-from kivymd.uix.button import Button
+from kivy.uix.button import Button
 from kivy_garden.mapview import MapSource, MapView, MapMarker
 from kivymd.theming import ThemableBehavior
 from kivy.clock import mainthread
