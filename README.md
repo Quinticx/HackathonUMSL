@@ -1,6 +1,8 @@
 
 # Just Don't
 
+![App Screenshot](logo.png)
+
 Whether it was our own trials or a loved one's, each one of us have dealt with the affects of substance abuse.
 Our app is designed to tackle one of the major factors of addiction; location.
 
@@ -24,11 +26,9 @@ To solve this issue our group designed an app that uses location data to reward 
 Insert gif or link to demo
 
   
-
-
-    
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot]()
 
+  
   
