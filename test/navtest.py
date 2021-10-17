@@ -13,6 +13,19 @@ class ContentNavigationDrawer(MDBoxLayout):
     screen_manager = ObjectProperty()
     nav_drawer = ObjectProperty()
 
+class PinButton(Button):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.text = "Add Pin"
+
+    def addpin(self):
+        mapview = App.get_running_app().root.ids.mapview
+        m1 = MapMarker(lat = mapview.lat, lon = mapview.lon, source = "marker.png")
+        mapview.add_marker(m1)
+
+
+
 
 class TestNavigationDrawer(MDApp):
     def build(self):
