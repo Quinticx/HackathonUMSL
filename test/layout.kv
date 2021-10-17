@@ -140,7 +140,7 @@ MDScreen:
                         id: addpin
                         text: 'Add Pin'
                         size_hint: 0.5, 0.5
-                        #on_press: DO STUFF
+                        on_press: mapview.add_marker(mapview.lat, mapview.lon, source="marker.png")
 
             MDScreen:
                 name: "Change Reward"
