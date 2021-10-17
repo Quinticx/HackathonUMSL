@@ -1,6 +1,8 @@
 
 # Just Don't
 
+![App Screenshot](logo.png)
+
 Whether it was our own trials or a loved one's, each one of us have dealt with the affects of substance abuse.
 Our app is designed to tackle one of the major factors of addiction; location.
 
@@ -19,16 +21,17 @@ To solve this issue our group designed an app that uses location data to reward 
 - [@JayaChitrakavi](https://www.github.com/jaya-c12)
 
   
-## Demo
+## Screenshots
+App view of the home screen, which shows the users current location and current sobriety streak.
+![App Screenshot](homedemo.png)
 
-Insert gif or link to demo
+App view of the navigation screen, which allows the user to go to the homescreen, add a pin screen, or choose rewards screen.
+![App Screenshot](navbardemo.png)
+
+App view of adding pins for user defined locations to avoid.
+![App Screenshot](addpindemo.png)
+
+
 
   
-
-
-    
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
   
