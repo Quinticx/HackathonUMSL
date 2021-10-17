@@ -33,7 +33,7 @@ class PinButton(Button):
 class TestNavigationDrawer(MDApp):
     def request_android_permissions(self):
         from android.permissions import request_permissions, Permission
-        
+
         request_permissions([Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION])
 
 
@@ -75,7 +75,7 @@ class TestNavigationDrawer(MDApp):
         self.lat = kwargs['lat']
         self.lon = kwargs['lon']
         self.root.ids.mapview.center_on(self.lat, self.lon)
-        
+
 
     @mainthread
     def status_update(self, stype, status):
