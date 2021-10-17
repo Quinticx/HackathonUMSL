@@ -11,14 +11,17 @@ from kivy.clock import mainthread
 from kivy.utils import platform
 from plyer import gps
 from kivy.clock import Clock
+import math
 
+
+mapPins = []
 
 class ContentNavigationDrawer(MDBoxLayout):
     screen_manager = ObjectProperty()
     nav_drawer = ObjectProperty()
 
-class PinButton(Button):
 
+class PinButton(Button):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.text = "Add Pin"
@@ -27,7 +30,7 @@ class PinButton(Button):
         mapview =MDApp.get_running_app().root.ids.mapview
         m1 = MapMarker(lat = mapview.lat, lon = mapview.lon, source = "marker.png")
         mapview.add_marker(m1)
-
+        mapPins.append(m1)
 
 
 class TestNavigationDrawer(MDApp):
@@ -35,7 +38,6 @@ class TestNavigationDrawer(MDApp):
         from android.permissions import request_permissions, Permission
 
         request_permissions([Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION])
-
 
     def build(self):
         try:
@@ -60,7 +62,7 @@ class TestNavigationDrawer(MDApp):
                 MapMarker(lat=38.718775, lon=-90.329539)
             )
 
-            Clock.schedule_interval(self.streak_callback, 30)
+            Clock.schedule_interval(self.streak_callback, 10) # 10 seconds as a testing value
 
     def streak_callback(self, dt):
         self.streak += 1
@@ -69,6 +71,8 @@ class TestNavigationDrawer(MDApp):
 
     @mainthread
     def location_update(self, **kwargs):
+        insideMarkerRadius = False
+
         print("GPS INFORMATION")
         print('\n'.join([
             '{}={}'.format(k, v) for k, v in kwargs.items()]))
@@ -76,6 +80,19 @@ class TestNavigationDrawer(MDApp):
         self.lon = kwargs['lon']
         self.root.ids.mapview.center_on(self.lat, self.lon)
 
+        for marker in mapPins:
+            # Distance is in terms of degrees lat/long
+            # Keep in mind that 1* latitutde != 1* longitude
+            distanceFromPin = math.dist([marker.lat, marker.lon], [self.lat, self.lon])
+            if distanceFromPin < .0003 and insideMarkerRadius != True:
+                insideMarkerRadius = True
+                print("Near a pinned location\n")
+                Clock.schedule_interval(self.streak_reset, 5) # 5 seconds as a testing value
+
+    def streak_reset(self, dt):
+        self.streak = 0;
+        for x in range(6):
+            self.root.ids["day" + str(x)].source = "empty.jpg"
 
     @mainthread
     def status_update(self, stype, status):
