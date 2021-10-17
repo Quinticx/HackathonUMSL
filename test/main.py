@@ -89,11 +89,13 @@ class TestNavigationDrawer(MDApp):
                 Clock.schedule_once(self.streak_reset, 5) # 5 seconds as a testing value
 
     def streak_reset(self, dt):
-        self.insideMarkerRadius = False
-        if distanceFromPin < .0003:
-            self.streak = 0;
-            for x in range(5):
-                self.root.ids["day" + str(x + 1)].source = "empty.jpg"
+        self.insideMarkerRadius = False        
+        for marker in mapPins:
+            distanceFromPin = math.dist([marker.lat, marker.lon], [self.lat, self.lon])
+            if distanceFromPin < .0003:
+                self.streak = 0;
+                for x in range(5):
+                    self.root.ids["day" + str(x + 1)].source = "empty.jpg"
 
     @mainthread
     def status_update(self, stype, status):
