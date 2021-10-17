@@ -104,7 +104,7 @@ class TestNavigationDrawer(MDApp):
                     Clock.schedule_once(self.streak_reset, 5) # 5 seconds as a testing value
                     self.show_alert_dialog()
                 isInRadius = True
-        
+
         self.personLocator.lat = self.lat
         self.personLocator.lon = self.lon
         self.insideMarkerRadius = isInRadius
