@@ -1,3 +1,5 @@
 .buildozer/*
 test/.buildozer/*
 *.png
+test/log
+.gitignore
