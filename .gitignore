@@ -3,3 +3,5 @@ test/.buildozer/*
 *.png
 test/log
 .gitignore
+test/bin/*
+bin/*
