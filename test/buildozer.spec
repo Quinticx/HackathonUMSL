@@ -1,7 +1,7 @@
 [app]
 
 # (str) Title of your application
-title = My Application
+title = Just Don't
 
 # (str) Package name
 package.name = myapp
@@ -49,7 +49,7 @@ requirements = python3,kivy,plyer,kivymd,pillow,requests,openssl,mapview,urllib3
 presplash.filename = static.png
 
 # (str) Icon of the application
-#icon.filename = %(source.dir)s/data/icon.png
+icon.filename = icon.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait
