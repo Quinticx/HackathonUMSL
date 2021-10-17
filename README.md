@@ -21,11 +21,6 @@ To solve this issue our group designed an app that uses location data to reward 
 - [@JayaChitrakavi](https://www.github.com/jaya-c12)
 
   
-## Demo
-
-Insert gif or link to demo
-
-  
 ## Screenshots
 App view of the home screen, which shows the users current location and current sobriety streak.
 ![App Screenshot](homedemo.png)
